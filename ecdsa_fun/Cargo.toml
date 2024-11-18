@@ -1,0 +1,46 @@
+[package]
+name = "ecdsa_fun"
+version = "0.10.0"
+authors = ["LLFourn <lloyd.fourn@gmail.com>"]
+edition = "2021"
+rust-version = "1.63"
+license = "0BSD"
+homepage = "https://github.com/LLFourn/secp256kfun/tree/master/ecdsa_fun"
+repository = "https://github.com/LLFourn/secp256kfun"
+documentation = "https://docs.rs/ecdsa_fun"
+description = "Bitcoin compatible ECDSA signatures based on secp256kfun"
+readme = "README.md"
+categories = ["cryptography", "cryptography::cryptocurrencies"]
+keywords = ["bitcoin", "ecdsa", "secp256k1"]
+
+[dependencies]
+
+[dev-dependencies]
+rand = "0.8"
+criterion = "0.4"
+lazy_static = "1.4"
+sha2 = "0.10"
+serde_json = "1"
+
+[[bench]]
+name = "bench_ecdsa"
+harness = false
+required-features = ["libsecp_compat"]
+
+
+[features]
+default = ["std"]
+libsecp_compat = ["libsecp_compat_0_28", "secp256kfun/libsecp_compat"]
+libsecp_compat_0_27 = ["secp256kfun/libsecp_compat_0_27"]
+libsecp_compat_0_28 = ["secp256kfun/libsecp_compat_0_28"]
+libsecp_compat_0_29 = ["secp256kfun/libsecp_compat_0_29"]
+std = ["alloc"]
+alloc = ["secp256kfun/alloc", "sigma_fun?/alloc" ]
+serde = ["secp256kfun/serde","sigma_fun?/serde"]
+adaptor = ["dep:sigma_fun", "dep:bincode", "dep:rand_chacha"]
+proptest = ["secp256kfun/proptest"]
+
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

@@ -1,0 +1,35 @@
+[package]
+name = "sigma_fun"
+version = "0.7.0"
+authors = ["LLFourn <lloyd.fourn@gmail.com>"]
+edition = "2021"
+rust-version = "1.63"
+license = "0BSD"
+description = "A framework for making Sigma protocols fun!"
+homepage = "https://github.com/LLFourn/secp256kfun/tree/master/sigma_fun"
+repository = "https://github.com/LLFourn/secp256kfun"
+documentation = "https://docs.rs/sigma_fun"
+categories = ["cryptography"]
+readme = "README.md"
+
+
+[dependencies]
+
+[dev-dependencies]
+secp256kfun = { path = "../secp256kfun", version = "0.10", default-features = false, features = ["proptest"] }
+rand = "0.8"
+sha2 = "0.10"
+bincode = "1"
+proptest = "1"
+rand_chacha = "0.3"
+
+[features]
+default = ["alloc", "secp256k1"]
+alloc = ["serde?/alloc", "secp256kfun/alloc"]
+secp256k1 = ["secp256kfun"]
+ed25519 = ["curve25519-dalek"]
+serde = ["dep:serde", "secp256kfun?/serde", "curve25519-dalek?/serde", "generic-array/serde"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

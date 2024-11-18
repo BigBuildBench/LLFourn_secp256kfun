@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "secp256kfun",
+    "schnorr_fun",
+    "ecdsa_fun",
+    "sigma_fun",
+    "arithmetic_macros"
+]
+resolver = "2"

@@ -1,0 +1,66 @@
+[package]
+name = "secp256kfun"
+version = "0.10.0"
+authors = ["LLFourn <lloyd.fourn@gmail.com>"]
+license = "0BSD"
+homepage = "https://github.com/LLFourn/secp256kfun"
+repository = "https://github.com/LLFourn/secp256kfun"
+documentation = "https://docs.rs/secp256kfun"
+description = "A mid-level secp256k1 library optimized for fun!"
+edition = "2021"
+rust-version = "1.63"
+categories = ["cryptography", "cryptography::cryptocurrencies"]
+readme = "README.md"
+keywords = ["bitcoin", "secp256k1"]
+
+
+[dependencies]
+
+[dev-dependencies]
+serde_json = "1"
+rand = { version = "0.8" }
+lazy_static = "1.4"
+sha2 = "0.10"
+proptest = "1"
+criterion = "0.4"
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[features]
+default = ["std"]
+libsecp_compat = ["libsecp_compat_0_29"]
+alloc = [
+"serde?/alloc",
+"digest/alloc",
+"bincode?/alloc",
+"secp256k1_0_27?/alloc",
+"secp256k1_0_28?/alloc",
+"secp256k1_0_29?/alloc",
+]
+std = ["alloc", "subtle/std", "digest/std", "bincode?/std", "secp256k1_0_27?/std", "secp256k1_0_28?/std"]
+serde = [
+"dep:serde",
+"bincode?/serde",
+"secp256k1_0_27?/serde",
+"secp256k1_0_28?/serde",
+"secp256k1_0_29?/serde",
+]
+
+libsecp_compat_0_27 = [ "dep:secp256k1_0_27" ]
+libsecp_compat_0_28 = [ "dep:secp256k1_0_28" ]
+libsecp_compat_0_29 = [ "dep:secp256k1_0_29" ]
+
+
+[[bench]]
+name = "bench_ecmult"
+harness = false
+
+[[bench]]
+name = "bench_point"
+harness = false
+
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
